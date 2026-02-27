@@ -19,6 +19,13 @@ logger = logging.getLogger("email_mcp")
 
 MCP_HOST = os.getenv("MCP_HOST", "0.0.0.0")
 MCP_PORT = int(os.getenv("MCP_PORT", "8000"))
+MCP_API_KEY = os.getenv("MCP_API_KEY", "")
+
+if not MCP_API_KEY or MCP_API_KEY == "CHANGE_ME_GENERATE_A_REAL_KEY":
+    logger.warning(
+        "MCP_API_KEY is not set or uses the default placeholder. "
+        "Generate one: python3 -c \"import secrets; print(secrets.token_urlsafe(48))\""
+    )
 
 # ── Initialize Exchange connection ───────────────────────────────
 

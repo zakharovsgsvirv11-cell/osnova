@@ -1,0 +1,45 @@
+services:
+  # MCP server — internal, not exposed to the internet
+  mcp:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    expose:
+      - "8000"
+    networks:
+      - internal
+
+  # Nginx — HTTPS reverse proxy, the only public-facing service
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/email-mcp.conf:/etc/nginx/conf.d/default.conf:ro
+      - certbot-webroot:/var/www/certbot:ro
+      - certbot-certs:/etc/letsencrypt:ro
+    depends_on:
+      - mcp
+    networks:
+      - internal
+
+  # Certbot — automatic certificate renewal
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-webroot:/var/www/certbot
+      - certbot-certs:/etc/letsencrypt
+    # Renew every 12 hours (certbot skips if not needed)
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --quiet; sleep 12h; done'"
+    networks:
+      - internal
+
+volumes:
+  certbot-webroot:
+  certbot-certs:
+
+networks:
+  internal:
+    driver: bridge

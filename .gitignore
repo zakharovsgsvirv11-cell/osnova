@@ -11,6 +11,9 @@ build/
 .tokens.json
 *.pem
 *.key
+*.crt
+ssl/
+certbot/
 
 .venv/
 venv/
