@@ -26,3 +26,9 @@ env/
 .vscode/
 *.swp
 *.swo
+
+# Finance Tracker
+finance/data/
+finance/frontend/node_modules/
+finance/frontend/dist/
+finance/backend/data/
