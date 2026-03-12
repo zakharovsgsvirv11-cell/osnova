@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="tx in transactions" :key="tx.id" :class="tx.type">
+        <tr v-for="tx in transactions" :key="tx.id" :class="tx.type === 'доход' ? 'type-income' : 'type-expense'">
           <td>{{ tx.date }}</td>
           <td>{{ tx.type }}</td>
           <td>{{ getCategoryName(tx.category_id) }}</td>

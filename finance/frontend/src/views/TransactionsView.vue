@@ -45,13 +45,13 @@
     <div class="pagination" v-if="financeStore.transactionsMeta.total > financeStore.transactionsMeta.per_page">
       <button :disabled="page === 1" @click="page--; loadData()">Назад</button>
       <span>Страница {{ page }}</span>
-      <button @click="page++; loadData()">Вперёд</button>
+      <button :disabled="page >= totalPages" @click="page++; loadData()">Вперёд</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useFinanceStore } from '../stores/finance'
 import { transactionsApi } from '../api/transactions'
 import { categoriesApi } from '../api/categories'
@@ -64,6 +64,9 @@ const editingTx = ref(null)
 const editingCat = ref(null)
 const showCategories = ref(false)
 const page = ref(1)
+const totalPages = computed(() =>
+  Math.ceil(financeStore.transactionsMeta.total / financeStore.transactionsMeta.per_page) || 1
+)
 
 async function loadData() {
   await Promise.all([

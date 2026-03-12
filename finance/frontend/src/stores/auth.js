@@ -5,6 +5,9 @@ import { authApi } from '../api/auth'
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const accessToken = ref(null)
+  const initialized = ref(false)
+
+  let _refreshPromise = null
 
   const isAuthenticated = computed(() => !!accessToken.value)
 
@@ -19,14 +22,28 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function tryRefresh() {
-    try {
-      const data = await authApi.refresh()
-      accessToken.value = data.access_token
-      await fetchUser()
-    } catch {
-      accessToken.value = null
-      user.value = null
-    }
+    if (_refreshPromise) return _refreshPromise
+
+    _refreshPromise = (async () => {
+      try {
+        const data = await authApi.refresh()
+        accessToken.value = data.access_token
+        await fetchUser()
+      } catch {
+        accessToken.value = null
+        user.value = null
+      } finally {
+        _refreshPromise = null
+      }
+    })()
+
+    return _refreshPromise
+  }
+
+  async function init() {
+    if (initialized.value) return
+    await tryRefresh()
+    initialized.value = true
   }
 
   async function logout() {
@@ -35,5 +52,5 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
   }
 
-  return { user, accessToken, isAuthenticated, login, logout, tryRefresh }
+  return { user, accessToken, isAuthenticated, initialized, login, logout, tryRefresh, init }
 })

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -19,8 +19,8 @@ class Category(Base):
     color: Mapped[str | None] = mapped_column(String(7))  # hex, e.g. '#4CAF50'
     is_active: Mapped[int] = mapped_column(Integer, default=1)
     created_at: Mapped[str] = mapped_column(
-        String(30), default=lambda: datetime.utcnow().isoformat()
+        String(30), default=lambda: datetime.now(timezone.utc).isoformat()
     )
 
-    user = relationship("User", back_populates="categories")
-    transactions = relationship("Transaction", back_populates="category")
+    user = relationship("User", back_populates="categories", lazy="selectin")
+    transactions = relationship("Transaction", back_populates="category", lazy="selectin")

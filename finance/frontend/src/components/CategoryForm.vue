@@ -28,6 +28,10 @@ watch(() => props.category, (val) => {
     form.name = val.name
     form.type = val.type
     form.color = val.color || '#4CAF50'
+  } else {
+    form.name = ''
+    form.type = 'расход'
+    form.color = '#4CAF50'
   }
 }, { immediate: true })
 

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import Float, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -17,13 +17,13 @@ class Transaction(Base):
     description: Mapped[str | None] = mapped_column(Text)
     date: Mapped[str] = mapped_column(String(10), nullable=False)  # ISO date 'YYYY-MM-DD'
     created_at: Mapped[str] = mapped_column(
-        String(30), default=lambda: datetime.utcnow().isoformat()
+        String(30), default=lambda: datetime.now(timezone.utc).isoformat()
     )
     updated_at: Mapped[str] = mapped_column(
         String(30),
-        default=lambda: datetime.utcnow().isoformat(),
-        onupdate=lambda: datetime.utcnow().isoformat(),
+        default=lambda: datetime.now(timezone.utc).isoformat(),
+        onupdate=lambda: datetime.now(timezone.utc).isoformat(),
     )
 
-    user = relationship("User", back_populates="transactions")
-    category = relationship("Category", back_populates="transactions")
+    user = relationship("User", back_populates="transactions", lazy="selectin")
+    category = relationship("Category", back_populates="transactions", lazy="selectin")

@@ -35,6 +35,11 @@ const filteredCategories = computed(() =>
   props.categories.filter((c) => c.type === form.type)
 )
 
+watch(() => form.type, () => {
+  const cats = filteredCategories.value
+  form.category_id = cats.length ? cats[0].id : null
+})
+
 watch(() => props.transaction, (val) => {
   if (val) {
     form.type = val.type

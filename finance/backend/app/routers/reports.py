@@ -14,10 +14,12 @@ router = APIRouter(prefix="/reports", tags=["reports"])
 
 @router.get("/monthly-summary", response_model=list[MonthlySummaryItem])
 async def monthly_summary(
-    year: int = Query(default_factory=lambda: datetime.now().year),
+    year: int | None = Query(default=None),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    if year is None:
+        year = datetime.now().year
     return await get_monthly_summary(db, user.id, year)
 
 
