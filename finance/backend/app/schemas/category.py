@@ -1,15 +1,17 @@
 from pydantic import BaseModel
 
+from app.schemas.transaction import TransactionType
+
 
 class CategoryCreate(BaseModel):
     name: str
-    type: str  # 'доход' | 'расход'
+    type: TransactionType
     color: str | None = None
 
 
 class CategoryUpdate(BaseModel):
     name: str | None = None
-    type: str | None = None
+    type: TransactionType | None = None
     color: str | None = None
 
 

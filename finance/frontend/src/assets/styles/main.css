@@ -175,8 +175,8 @@ tbody tr:nth-child(even) {
   font-weight: 600;
 }
 
-tr.income .amount { color: #4CAF50; }
-tr.expense .amount { color: #F44336; }
+tr.доход .amount { color: #4CAF50; }
+tr.расход .amount { color: #F44336; }
 
 /* Forms */
 .transaction-form,
