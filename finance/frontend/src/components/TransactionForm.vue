@@ -1,19 +1,19 @@
 <template>
   <form class="transaction-form" @submit.prevent="handleSubmit">
     <select v-model="form.type" required>
-      <option value="income">Income</option>
-      <option value="expense">Expense</option>
+      <option value="доход">Доход</option>
+      <option value="расход">Расход</option>
     </select>
     <select v-model="form.category_id" required>
       <option v-for="cat in filteredCategories" :key="cat.id" :value="cat.id">
         {{ cat.name }}
       </option>
     </select>
-    <input v-model.number="form.amount" type="number" step="0.01" min="0.01" placeholder="Amount" required />
+    <input v-model.number="form.amount" type="number" step="0.01" min="0.01" placeholder="Сумма" required />
     <input v-model="form.date" type="date" required />
-    <input v-model="form.description" placeholder="Description" />
-    <button type="submit">{{ editing ? 'Update' : 'Add' }}</button>
-    <button v-if="editing" type="button" @click="$emit('cancel')">Cancel</button>
+    <input v-model="form.description" placeholder="Описание" />
+    <button type="submit">{{ editing ? 'Обновить' : 'Добавить' }}</button>
+    <button v-if="editing" type="button" @click="$emit('cancel')">Отмена</button>
   </form>
 </template>
 
@@ -29,7 +29,7 @@ const props = defineProps({
 const emit = defineEmits(['submit', 'cancel'])
 
 const today = new Date().toISOString().slice(0, 10)
-const form = reactive({ type: 'expense', category_id: null, amount: null, date: today, description: '' })
+const form = reactive({ type: 'расход', category_id: null, amount: null, date: today, description: '' })
 
 const filteredCategories = computed(() =>
   props.categories.filter((c) => c.type === form.type)

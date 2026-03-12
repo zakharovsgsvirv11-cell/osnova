@@ -18,7 +18,7 @@ router = APIRouter(prefix="/transactions", tags=["transactions"])
 
 @router.get("", response_model=TransactionListResponse)
 async def list_transactions(
-    type: str | None = Query(None, pattern="^(income|expense)$"),
+    type: str | None = Query(None, pattern="^(доход|расход)$"),
     category_id: int | None = None,
     date_from: str | None = None,
     date_to: str | None = None,
@@ -87,7 +87,7 @@ async def update_transaction(
     )
     tx = result.scalar_one_or_none()
     if not tx:
-        raise HTTPException(status_code=404, detail="Transaction not found")
+        raise HTTPException(status_code=404, detail="Транзакция не найдена")
 
     for field, value in body.model_dump(exclude_unset=True).items():
         setattr(tx, field, value)
@@ -108,7 +108,7 @@ async def delete_transaction(
     )
     tx = result.scalar_one_or_none()
     if not tx:
-        raise HTTPException(status_code=404, detail="Transaction not found")
+        raise HTTPException(status_code=404, detail="Транзакция не найдена")
 
     await db.delete(tx)
     await db.commit()

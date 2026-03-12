@@ -1,6 +1,6 @@
 <template>
   <div class="transactions-page">
-    <h2>Transactions</h2>
+    <h2>Транзакции</h2>
 
     <TransactionForm
       :categories="financeStore.categories"
@@ -18,9 +18,9 @@
     />
 
     <div class="pagination" v-if="financeStore.transactionsMeta.total > financeStore.transactionsMeta.per_page">
-      <button :disabled="page === 1" @click="page--; loadData()">Prev</button>
-      <span>Page {{ page }}</span>
-      <button @click="page++; loadData()">Next</button>
+      <button :disabled="page === 1" @click="page--; loadData()">Назад</button>
+      <span>Страница {{ page }}</span>
+      <button @click="page++; loadData()">Вперёд</button>
     </div>
   </div>
 </template>

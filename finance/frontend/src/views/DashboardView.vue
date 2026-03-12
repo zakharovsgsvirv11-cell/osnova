@@ -1,17 +1,17 @@
 <template>
   <div class="dashboard">
-    <h2>Dashboard</h2>
+    <h2>Панель управления</h2>
     <div class="balance-cards">
       <div class="card income">
-        <span class="label">Total Income</span>
+        <span class="label">Общий доход</span>
         <span class="value">{{ formatMoney(balance.total_income) }}</span>
       </div>
       <div class="card expense">
-        <span class="label">Total Expenses</span>
+        <span class="label">Общие расходы</span>
         <span class="value">{{ formatMoney(balance.total_expense) }}</span>
       </div>
       <div class="card balance">
-        <span class="label">Balance</span>
+        <span class="label">Баланс</span>
         <span class="value">{{ formatMoney(balance.balance) }}</span>
       </div>
     </div>

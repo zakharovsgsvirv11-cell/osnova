@@ -15,7 +15,7 @@ class Category(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
-    type: Mapped[str] = mapped_column(String(10), nullable=False)  # 'income' | 'expense'
+    type: Mapped[str] = mapped_column(String(10), nullable=False)  # 'доход' | 'расход'
     color: Mapped[str | None] = mapped_column(String(7))  # hex, e.g. '#4CAF50'
     is_active: Mapped[int] = mapped_column(Integer, default=1)
     created_at: Mapped[str] = mapped_column(

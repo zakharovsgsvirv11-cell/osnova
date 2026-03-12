@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class TransactionCreate(BaseModel):
     category_id: int
     amount: float
-    type: str  # 'income' | 'expense'
+    type: str  # 'доход' | 'расход'
     description: str | None = None
     date: str  # 'YYYY-MM-DD'
 

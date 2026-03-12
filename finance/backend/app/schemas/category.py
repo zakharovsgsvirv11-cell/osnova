@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class CategoryCreate(BaseModel):
     name: str
-    type: str  # 'income' | 'expense'
+    type: str  # 'доход' | 'расход'
     color: str | None = None
 
 

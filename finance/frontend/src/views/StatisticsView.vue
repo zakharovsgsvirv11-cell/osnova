@@ -1,6 +1,6 @@
 <template>
   <div class="statistics-page">
-    <h2>Statistics</h2>
+    <h2>Статистика</h2>
     <ReportSelector @change="selectedReport = $event" />
 
     <div class="report-content">
@@ -9,9 +9,9 @@
       <TrendLineChart v-if="selectedReport === 'trend'" :data="trendData" />
 
       <div v-if="selectedReport === 'balance'" class="balance-summary">
-        <p>Income: {{ balance.total_income?.toLocaleString('ru-RU') }}</p>
-        <p>Expenses: {{ balance.total_expense?.toLocaleString('ru-RU') }}</p>
-        <p><strong>Balance: {{ balance.balance?.toLocaleString('ru-RU') }}</strong></p>
+        <p>Доходы: {{ balance.total_income?.toLocaleString('ru-RU') }}</p>
+        <p>Расходы: {{ balance.total_expense?.toLocaleString('ru-RU') }}</p>
+        <p><strong>Баланс: {{ balance.balance?.toLocaleString('ru-RU') }}</strong></p>
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@ async function loadReport(report) {
       categoryBreakdown.value = await reportsApi.categoryBreakdown({
         date_from: `${year}-01-01`,
         date_to: `${year}-12-31`,
-        type: 'expense',
+        type: 'расход',
       })
       break
     case 'trend':

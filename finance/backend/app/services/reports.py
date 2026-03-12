@@ -6,7 +6,7 @@ from app.models.transaction import Transaction
 
 
 async def get_monthly_summary(db: AsyncSession, user_id: int, year: int) -> list[dict]:
-    """Доходы vs расходы по месяцам за указанный год."""
+    """Доходы и расходы по месяцам за указанный год."""
     stmt = (
         select(
             func.substr(Transaction.date, 1, 7).label("month"),
@@ -25,7 +25,10 @@ async def get_monthly_summary(db: AsyncSession, user_id: int, year: int) -> list
     for month, tx_type, total in rows:
         if month not in months:
             months[month] = {"month": month, "income": 0.0, "expense": 0.0}
-        months[month][tx_type] = total
+        if tx_type == "доход":
+            months[month]["income"] = total
+        elif tx_type == "расход":
+            months[month]["expense"] = total
 
     for item in months.values():
         item["balance"] = item["income"] - item["expense"]
@@ -87,7 +90,10 @@ async def get_trend(db: AsyncSession, user_id: int, months: int = 12) -> list[di
     for month, tx_type, total in rows:
         if month not in data:
             data[month] = {"month": month, "income": 0.0, "expense": 0.0}
-        data[month][tx_type] = total
+        if tx_type == "доход":
+            data[month]["income"] = total
+        elif tx_type == "расход":
+            data[month]["expense"] = total
 
     sorted_months = sorted(data.values(), key=lambda x: x["month"], reverse=True)[:months]
     return list(reversed(sorted_months))
@@ -103,6 +109,6 @@ async def get_balance(db: AsyncSession, user_id: int) -> dict:
     result = await db.execute(stmt)
     totals = {r.type: r.total for r in result.all()}
 
-    income = totals.get("income", 0.0)
-    expense = totals.get("expense", 0.0)
+    income = totals.get("доход", 0.0)
+    expense = totals.get("расход", 0.0)
     return {"total_income": income, "total_expense": expense, "balance": income - expense}

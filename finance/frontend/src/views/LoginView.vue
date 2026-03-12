@@ -1,13 +1,13 @@
 <template>
   <div class="login-page">
     <div class="login-card">
-      <h1>Finance Tracker</h1>
+      <h1>Финансовый трекер</h1>
       <form @submit.prevent="handleLogin">
-        <input v-model="username" type="text" placeholder="Username" required autofocus />
-        <input v-model="password" type="password" placeholder="Password" required />
+        <input v-model="username" type="text" placeholder="Имя пользователя" required autofocus />
+        <input v-model="password" type="password" placeholder="Пароль" required />
         <p v-if="error" class="error">{{ error }}</p>
         <button type="submit" :disabled="loading">
-          {{ loading ? 'Logging in...' : 'Login' }}
+          {{ loading ? 'Вход...' : 'Войти' }}
         </button>
       </form>
     </div>
@@ -34,7 +34,7 @@ async function handleLogin() {
     await authStore.login(username.value, password.value)
     router.push('/')
   } catch {
-    error.value = 'Invalid username or password'
+    error.value = 'Неверное имя пользователя или пароль'
   } finally {
     loading.value = false
   }

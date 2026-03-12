@@ -1,10 +1,10 @@
 <template>
   <div class="report-selector">
     <select v-model="selectedReport" @change="$emit('change', selectedReport)">
-      <option value="monthly-summary">Monthly Summary</option>
-      <option value="category-breakdown">Category Breakdown</option>
-      <option value="trend">Trend</option>
-      <option value="balance">Balance</option>
+      <option value="monthly-summary">Месячная сводка</option>
+      <option value="category-breakdown">По категориям</option>
+      <option value="trend">Тренд</option>
+      <option value="balance">Баланс</option>
     </select>
   </div>
 </template>

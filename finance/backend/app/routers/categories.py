@@ -13,7 +13,7 @@ router = APIRouter(prefix="/categories", tags=["categories"])
 
 @router.get("", response_model=list[CategoryResponse])
 async def list_categories(
-    type: str | None = Query(None, pattern="^(income|expense)$"),
+    type: str | None = Query(None, pattern="^(доход|расход)$"),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -50,7 +50,7 @@ async def update_category(
     )
     category = result.scalar_one_or_none()
     if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
+        raise HTTPException(status_code=404, detail="Категория не найдена")
 
     for field, value in body.model_dump(exclude_unset=True).items():
         setattr(category, field, value)
@@ -71,7 +71,7 @@ async def delete_category(
     )
     category = result.scalar_one_or_none()
     if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
+        raise HTTPException(status_code=404, detail="Категория не найдена")
 
     category.is_active = 0
     await db.commit()

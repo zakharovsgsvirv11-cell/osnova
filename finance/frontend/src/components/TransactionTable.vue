@@ -3,12 +3,12 @@
     <table>
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Type</th>
-          <th>Category</th>
-          <th>Amount</th>
-          <th>Description</th>
-          <th>Actions</th>
+          <th>Дата</th>
+          <th>Тип</th>
+          <th>Категория</th>
+          <th>Сумма</th>
+          <th>Описание</th>
+          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
@@ -19,8 +19,8 @@
           <td class="amount">{{ formatAmount(tx.amount, tx.type) }}</td>
           <td>{{ tx.description }}</td>
           <td>
-            <button @click="$emit('edit', tx)">Edit</button>
-            <button @click="$emit('delete', tx.id)">Delete</button>
+            <button @click="$emit('edit', tx)">Редактировать</button>
+            <button @click="$emit('delete', tx.id)">Удалить</button>
           </td>
         </tr>
       </tbody>
@@ -42,7 +42,7 @@ function getCategoryName(id) {
 }
 
 function formatAmount(amount, type) {
-  const sign = type === 'income' ? '+' : '-'
+  const sign = type === 'доход' ? '+' : '-'
   return `${sign}${amount.toLocaleString('ru-RU', { minimumFractionDigits: 2 })}`
 }
 </script>

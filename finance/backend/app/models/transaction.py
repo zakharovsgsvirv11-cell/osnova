@@ -13,7 +13,7 @@ class Transaction(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id", ondelete="RESTRICT"), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    type: Mapped[str] = mapped_column(String(10), nullable=False)  # 'income' | 'expense'
+    type: Mapped[str] = mapped_column(String(10), nullable=False)  # 'доход' | 'расход'
     description: Mapped[str | None] = mapped_column(Text)
     date: Mapped[str] = mapped_column(String(10), nullable=False)  # ISO date 'YYYY-MM-DD'
     created_at: Mapped[str] = mapped_column(

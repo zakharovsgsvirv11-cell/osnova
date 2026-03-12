@@ -21,5 +21,5 @@ const chartData = computed(() => ({
   ],
 }))
 
-const options = { responsive: true, plugins: { title: { display: true, text: 'By Category' } } }
+const options = { responsive: true, plugins: { title: { display: true, text: 'По категориям' } } }
 </script>

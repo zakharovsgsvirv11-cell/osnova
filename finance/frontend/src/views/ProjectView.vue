@@ -1,15 +1,15 @@
 <template>
   <div class="project-page">
-    <h2>Project</h2>
+    <h2>Проект</h2>
 
     <div v-if="!data.headers.length" class="empty-state">
-      <p>Google Sheets not configured or no data available.</p>
-      <p>Configure GOOGLE_SHEET_ID and GOOGLE_SERVICE_ACCOUNT_KEY in .env</p>
+      <p>Google Sheets не настроен или данные отсутствуют.</p>
+      <p>Настройте GOOGLE_SHEET_ID и GOOGLE_SERVICE_ACCOUNT_KEY в .env</p>
     </div>
 
     <div v-else>
       <div class="project-summary">
-        <p>Total rows: {{ summary.total_rows }}</p>
+        <p>Всего строк: {{ summary.total_rows }}</p>
       </div>
 
       <table class="project-table">

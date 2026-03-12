@@ -25,7 +25,7 @@ async def monthly_summary(
 async def category_breakdown(
     date_from: str = Query(...),
     date_to: str = Query(...),
-    type: str = Query(..., pattern="^(income|expense)$"),
+    type: str = Query(..., pattern="^(доход|расход)$"),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):

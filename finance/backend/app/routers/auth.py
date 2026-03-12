@@ -17,7 +17,7 @@ async def login(body: LoginRequest, response: Response, db: AsyncSession = Depen
     user = result.scalar_one_or_none()
 
     if user is None or not verify_password(body.password, user.password_hash):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверные учётные данные")
 
     access_token = create_access_token(user.id)
     refresh = create_refresh_token(user.id)
@@ -43,7 +43,7 @@ async def refresh(user: User = Depends(get_user_from_refresh_token)):
 @router.post("/logout")
 async def logout(response: Response):
     response.delete_cookie("refresh_token")
-    return {"detail": "Logged out"}
+    return {"detail": "Выход выполнен"}
 
 
 @router.get("/me", response_model=UserResponse)
